@@ -1,4 +1,4 @@
-package com.edu.kotlinproject
+package com.edu.kotlinproject.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import com.edu.kotlinproject.R
 
 class SecondFragment : Fragment() {
     override fun onCreateView(
