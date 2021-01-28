@@ -59,7 +59,7 @@ class NoteActivity : AppCompatActivity() {
         if (note != null) {
             titleEt.setText(note?.title ?: "")
             bodyEt.setText(note?.note ?: "")
-            val color = when(note!!.color) {
+            val color = when (note!!.color) {
                 Color.WHITE -> R.color.color_white
                 Color.VIOLET -> R.color.color_violet
                 Color.YELLOW -> R.color.color_yellow
@@ -75,7 +75,7 @@ class NoteActivity : AppCompatActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> {
             onBackPressed()
             true

@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        adapter = MainAdapter( object : MainAdapter.OnItemClickListener {
+        adapter = MainAdapter(object : MainAdapter.OnItemClickListener {
             override fun onItemClick(note: Note) {
                 openNoteScreen(note)
             }
