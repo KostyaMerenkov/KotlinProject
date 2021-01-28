@@ -2,8 +2,16 @@ plugins {
     id 'com.android.application'
 }
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+androidExtensions {
+    experimental = true
+}
+
+
 
 android {
+
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -30,7 +38,10 @@ android {
     buildFeatures {
         viewBinding = true;
     }
+
+
 }
+
 
 dependencies {
 
