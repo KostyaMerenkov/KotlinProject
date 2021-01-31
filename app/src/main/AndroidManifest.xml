@@ -10,8 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinProject">
         <activity android:name=".ui.note.NoteActivity"
-            android:theme="@style/Theme.KotlinProject.NoActionBar">
-
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
             android:name=".MainActivity"

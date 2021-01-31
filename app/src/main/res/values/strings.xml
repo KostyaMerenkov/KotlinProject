@@ -12,4 +12,5 @@
     <string name="item_note_header">Geekbrains + Kotlin forever</string>
     <string name="item_note_text">Я Kotlin бы выучил только за то, что на нем разрабатывал Вортон!</string>
     <string name="new_note_title">Новая заметка</string>
+    <string name="ok_bth_title">Хорошо</string>
 </resources>
