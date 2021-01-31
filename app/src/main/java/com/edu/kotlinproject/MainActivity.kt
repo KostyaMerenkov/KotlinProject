@@ -1,24 +1,71 @@
 package com.edu.kotlinproject
 
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.edu.kotlinproject.R
+import com.edu.kotlinproject.data.model.Note
+import com.edu.kotlinproject.databinding.ActivityMainBinding
+import com.edu.kotlinproject.ui.BaseActivity
+import com.edu.kotlinproject.ui.main.MainAdapter
+import com.edu.kotlinproject.ui.main.MainViewModel
+import com.edu.kotlinproject.ui.main.MainViewState
+import com.edu.kotlinproject.ui.note.NoteActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity() : BaseActivity<List<Note>?, MainViewState>() {
+
+    override val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+    override val layoutRes: Int = R.layout.activity_main
+    private lateinit var adapter: MainAdapter
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+
+        adapter = MainAdapter( object : MainAdapter.OnItemClickListener {
+            override fun onItemClick(note: Note) {
+                openNoteScreen(note)
+            }
+        })
+        mainRecycler.adapter = adapter
+
+        fab.setOnClickListener { openNoteScreen(null) }
+
+
+
+//        super.onCreate(savedInstanceState)
+//        ui = ActivityMainBinding.inflate(layoutInflater)
+//        setContentView(ui.root)
+//
+//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+//        setSupportActionBar(toolbar)
+//
+//        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+//        adapter = MainAdapter(object : MainAdapter.OnItemClickListener {
+//            override fun onItemClick(note: Note) {
+//                openNoteScreen(note)
+//            }
+//        })
+//        ui.mainRecycler.adapter = adapter
+//
+//        viewModel.viewState().observe(this, Observer<MainViewState> { t ->
+//            t?.let { adapter.notes = it.notes }
+//        })
+//
+//        ui.fab.setOnClickListener {
+//            openNoteScreen(null)
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -36,4 +83,15 @@ class MainActivity : AppCompatActivity() {
             true
         } else super.onOptionsItemSelected(item)
     }
+
+    private fun openNoteScreen(note: Note?) {
+        val intent = NoteActivity.getStartIntent(this, note?.id)
+        startActivity(intent)
+    }
+
+    override fun renderData(data: List<Note>?) {
+        if (data == null) return
+        adapter.notes = data
+    }
+
 }
