@@ -7,15 +7,14 @@ import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.edu.kotlinproject.R
-import com.edu.kotlinproject.data.DATE_TIME_FORMAT
-import com.edu.kotlinproject.data.model.Color
+import com.edu.kotlinproject.data.format
+import com.edu.kotlinproject.data.getColorInt
 import com.edu.kotlinproject.data.model.Note
-import com.edu.kotlinproject.ui.BaseActivity
+import com.edu.kotlinproject.databinding.ActivityNoteBinding
+import com.edu.kotlinproject.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_note.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 private const val SAVE_DELAY = 2000L
@@ -33,6 +32,10 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     override val viewModel: NoteViewModel by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
+    override val ui: ActivityNoteBinding
+            by lazy {
+                ActivityNoteBinding.inflate(layoutInflater)
+            }
     override val layoutRes: Int = R.layout.activity_note
     private var note: Note? = null
 
@@ -60,24 +63,16 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     private fun initView() {
-        if (note != null) {
-            titleEt.setText(note?.title ?: "")
-            bodyEt.setText(note?.note ?: "")
-            val color = when (note!!.color) {
-                Color.WHITE -> R.color.color_white
-                Color.VIOLET -> R.color.color_violet
-                Color.YELLOW -> R.color.color_yellow
-                Color.RED -> R.color.color_red
-                Color.PINK -> R.color.color_pink
-                Color.GREEN -> R.color.color_green
-                Color.BLUE -> R.color.color_blue
-            }
+        note?.run {
+            toolbar.setBackgroundColor(color.getColorInt(this@NoteActivity))
+            titleEt.setText(title)
+            bodyEt.setText(note)
+
+            supportActionBar?.title = lastChanged.format()
+        }
             titleEt.addTextChangedListener(textChangeListener)
             bodyEt.addTextChangedListener(textChangeListener)
-
-            toolbar.setBackgroundColor(resources.getColor(color))
         }
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> {
