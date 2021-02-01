@@ -1,4 +1,4 @@
-package com.edu.kotlinproject.ui
+package com.edu.kotlinproject.ui.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

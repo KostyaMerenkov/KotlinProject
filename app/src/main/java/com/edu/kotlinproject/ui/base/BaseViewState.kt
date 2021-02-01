@@ -1,5 +1,3 @@
-package com.edu.kotlinproject.ui
-
-import java.util.*
+package com.edu.kotlinproject.ui.base
 
 open class BaseViewState<T>(val data: T, val error: Throwable?)

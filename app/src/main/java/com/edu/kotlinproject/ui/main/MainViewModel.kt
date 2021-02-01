@@ -1,13 +1,10 @@
 package com.edu.kotlinproject.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.edu.kotlinproject.data.model.Note
 import com.edu.kotlinproject.data.model.NoteResult
 import com.edu.kotlinproject.data.model.Repository
-import com.edu.kotlinproject.ui.BaseViewModel
+import com.edu.kotlinproject.ui.base.BaseViewModel
 
 class MainViewModel(val repository: Repository = Repository) :
     BaseViewModel<List<Note>?, MainViewState>() {
