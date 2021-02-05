@@ -12,7 +12,6 @@ android {
 
     defaultConfig {
         applicationId "com.edu.kotlinproject"
-        minSdkVersion 30
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -47,9 +46,9 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     // LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     //Firebase
     implementation 'com.google.firebase:firebase-core:18.0.2'
     implementation 'com.google.firebase:firebase-firestore:22.0.2'
