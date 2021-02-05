@@ -6,7 +6,7 @@ import com.edu.kotlinproject.data.model.NoteResult
 import com.edu.kotlinproject.data.model.Repository
 import com.edu.kotlinproject.ui.base.BaseViewModel
 
-class MainViewModel(val repository: Repository = Repository) :
+class MainViewModel(private val repository: Repository) :
     BaseViewModel<List<Note>?, MainViewState>() {
 
     private val notesObserver = object : Observer<NoteResult> {

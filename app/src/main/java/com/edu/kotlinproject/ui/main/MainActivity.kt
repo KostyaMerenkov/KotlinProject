@@ -15,11 +15,11 @@ import com.edu.kotlinproject.ui.base.BaseActivity
 import com.edu.kotlinproject.ui.note.NoteActivity
 import com.edu.kotlinproject.ui.splash.SplashActivity
 import com.firebase.ui.auth.AuthUI
-import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity() : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.LogoutListener {
 
-    override val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+    override val viewModel: MainViewModel by viewModel()
     override val ui: ActivityMainBinding
             by lazy {
                 ActivityMainBinding.inflate(layoutInflater)
@@ -30,39 +30,16 @@ class MainActivity() : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(ui.toolbar)
 
         adapter = MainAdapter(object : MainAdapter.OnItemClickListener {
             override fun onItemClick(note: Note) {
                 openNoteScreen(note)
             }
         })
-        mainRecycler.adapter = adapter
+        ui.mainRecycler.adapter = adapter
 
-        fab.setOnClickListener { openNoteScreen(null) }
-
-//        super.onCreate(savedInstanceState)
-//        ui = ActivityMainBinding.inflate(layoutInflater)
-//        setContentView(ui.root)
-//
-//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-//        setSupportActionBar(toolbar)
-//
-//        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//        adapter = MainAdapter(object : MainAdapter.OnItemClickListener {
-//            override fun onItemClick(note: Note) {
-//                openNoteScreen(note)
-//            }
-//        })
-//        ui.mainRecycler.adapter = adapter
-//
-//        viewModel.viewState().observe(this, Observer<MainViewState> { t ->
-//            t?.let { adapter.notes = it.notes }
-//        })
-//
-//        ui.fab.setOnClickListener {
-//            openNoteScreen(null)
-//        }
+        ui.fab.setOnClickListener { openNoteScreen(null) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
