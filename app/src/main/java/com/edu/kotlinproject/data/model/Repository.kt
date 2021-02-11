@@ -4,9 +4,7 @@ import com.edu.kotlinproject.data.model.providers.FireStoreProvider
 import com.edu.kotlinproject.data.model.providers.RemoteDataProvider
 import java.util.*
 
-object Repository {
-
-    private val remoteDataProvider: RemoteDataProvider = FireStoreProvider()
+class Repository(private val remoteDataProvider: RemoteDataProvider) {
 
     fun getNotes() = remoteDataProvider.subscribeToAllNotes()
 
@@ -15,4 +13,6 @@ object Repository {
     fun getNoteById(id: String) = remoteDataProvider.getNoteById(id)
 
     fun getCurrentUser() = remoteDataProvider.getCurrentUser()
+
+    fun deleteNote(noteId: String) = remoteDataProvider.deleteNote(noteId)
 }

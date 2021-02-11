@@ -14,8 +14,10 @@ const val START_DELAY = 1000L
 fun Date.format(): String = SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(this)
 //val date : String = Date().format()
 
-fun Color.getColorInt(context: Context): Int =
-        ContextCompat.getColor(context, when (this) {
+fun Color.getColorInt(context: Context): Int  =
+    ContextCompat.getColor(context, getColorRes())
+
+fun Color.getColorRes(): Int = when (this) {
             Color.WHITE -> R.color.color_white
             Color.VIOLET -> R.color.color_violet
             Color.YELLOW -> R.color.color_yellow
@@ -23,5 +25,6 @@ fun Color.getColorInt(context: Context): Int =
             Color.PINK -> R.color.color_pink
             Color.GREEN -> R.color.color_green
             Color.BLUE -> R.color.color_blue
-        })
-//val res = Color.WHITE.getColorInt()
+        }
+
+fun Context.dip(value: Int): Int = (value * resources.displayMetrics.density).toInt()

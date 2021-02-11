@@ -14,15 +14,15 @@ import com.google.firebase.firestore.*
 private const val NOTES_COLLECTION = "NOTES"
 private const val USERS_COLLECTION = "USERS"
 
-class FireStoreProvider : RemoteDataProvider {
+class FireStoreProvider(private val firebaseAuth: FirebaseAuth,
+private val db: FirebaseFirestore) : RemoteDataProvider {
 
     companion object {
         private val TAG = "${FireStoreProvider::class.java.simpleName} :"
     }
 
-    private val db = FirebaseFirestore.getInstance()
     private val currentUser
-        get() = FirebaseAuth.getInstance().currentUser
+        get() = firebaseAuth.currentUser
 
     override fun subscribeToAllNotes(): LiveData<NoteResult> =
             MutableLiveData<NoteResult>().apply {
@@ -82,6 +82,23 @@ class FireStoreProvider : RemoteDataProvider {
                         it.email ?: ""
                 ) }
         }
+
+    override fun deleteNote(noteId: String): LiveData<NoteResult> =
+        MutableLiveData<NoteResult>().apply {
+            try {
+                getUserNotesCollection().document(noteId).delete()
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Note $noteId is deleted")
+                        value = NoteResult.Success(null)
+                    }
+                    .addOnFailureListener {
+                        Log.d(TAG, "Error while deleting note $noteId, message ${it.message}")
+                        value = NoteResult.Error(it)
+                    }
+            } catch (error: Throwable) {
+                value = NoteResult.Error(error)
+            }
+    }
 
     private fun getUserNotesCollection() = currentUser?.let { firebaseUser ->
         db.collection(USERS_COLLECTION)
